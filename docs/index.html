@@ -1,38 +1,18 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id=GTM-KF747VS2'+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KF747VS2');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AJR Contabilidade | Assessoria & Consultoria</title>
-
     <link id="favicon" rel="icon" type="image/jpeg" href="https://pbs.twimg.com/media/HGJIzXZWQAAKRf2?format=jpg&name=4096x4096" />
-
-    <!-- 🔥 META PIXEL -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;
-      n.push=n;
-      n.loaded=!0;
-      n.version='2.0';
-      n.queue=[];
-      t=b.createElement(e);
-      t.async=!0;
-      t.src=v;
-      s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s);
-      }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-
-      fbq('init', '931037339767773');
-      fbq('track', 'PageView');
-    </script>
-
-    <noscript>
-      <img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=931037339767773&ev=PageView&noscript=1"/>
-    </noscript>
-    <!-- 🔥 END META PIXEL -->
 
     <script>
       // Script para remover o fundo branco do favicon dinamicamente
@@ -40,43 +20,42 @@
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.src = "https://pbs.twimg.com/media/HGJIzXZWQAAKRf2?format=jpg&name=4096x4096";
-
         img.onload = function() {
           const canvas = document.createElement('canvas');
           canvas.width = img.width;
           canvas.height = img.height;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0);
-
+          
           const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
           const data = imageData.data;
-
-          // Transparência para pixels brancos
+          
           for (let i = 0; i < data.length; i += 4) {
             const r = data[i];
             const g = data[i+1];
             const b = data[i+2];
-
             if (r > 230 && g > 230 && b > 230) {
               data[i+3] = 0;
             }
           }
-
+          
           ctx.putImageData(imageData, 0, 0);
-
           const favicon = document.getElementById('favicon');
           favicon.href = canvas.toDataURL('image/png');
           favicon.type = 'image/png';
         };
       })();
     </script>
-
-    <!-- VITE BUILD -->
-    <script type="module" crossorigin src="./assets/index-CpP3LM2Z.js"></script>
+    <script type="module" crossorigin src="./assets/index-D8MiA-us.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-Byz9qMvm.css">
   </head>
 
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KF747VS2"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <div id="root"></div>
   </body>
 </html>

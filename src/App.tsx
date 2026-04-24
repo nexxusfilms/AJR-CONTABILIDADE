@@ -33,7 +33,7 @@ import { motion, AnimatePresence } from "motion/react";
 const BRAND_PHONE = "11940141936";
 const BRAND_EMAIL = "contato@contabilidadeajr.com.br";
 const BRAND_ADDRESS = "R. Mangaratiba, 134 - Sala 3 - Cidade Dutra, São Paulo - SP, 04811-010";
-const BRAND_HOURS = "Segunda à Sexta – das 08:00 às 18:00";
+const BRAND_HOURS = "Segunda à Sexta – das 09:00 às 18:00";
 const CLIENT_PORTAL_URL = "https://contabildataapp.azurewebsites.net/Account/Login";
 
 const PLANS = [
@@ -435,7 +435,7 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean, 
              >
                 <Clock size={24} md:size={32} strokeWidth={2.5} className="text-white/80 mb-1 md:mb-2 transition-transform group-hover:scale-110" />
                 <span className="text-2xl md:text-5xl lg:text-6xl font-black font-serif tracking-tighter text-white">15+</span>
-                <span className="text-white/60 text-[8px] md:text-[10px] uppercase font-black tracking-[0.2em] mt-1 whitespace-nowrap">Exp.</span>
+                <span className="text-white/60 text-[8px] md:text-[10px] uppercase font-black tracking-[0.2em] mt-1 whitespace-nowrap">Experiência</span>
              </motion.div>
              
              <motion.div 
@@ -446,7 +446,7 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean, 
                 className="flex flex-col items-center lg:items-start group transition-all text-center lg:text-left"
              >
                 <Users size={24} md:size={32} strokeWidth={2.5} className="text-white/80 mb-1 md:mb-2 transition-transform group-hover:scale-110" />
-                <span className="text-2xl md:text-5xl lg:text-6xl font-black font-serif tracking-tighter text-white">500+</span>
+                <span className="text-2xl md:text-5xl lg:text-6xl font-black font-serif tracking-tighter text-white">250+</span>
                 <span className="text-white/60 text-[8px] md:text-[10px] uppercase font-black tracking-[0.2em] mt-1 whitespace-nowrap">Clientes</span>
              </motion.div>
           </div>
