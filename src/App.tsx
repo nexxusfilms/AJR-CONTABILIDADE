@@ -177,35 +177,35 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden lg:flex items-center gap-5 flex-nowrap">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              className={`text-sm font-semibold transition-all duration-300 hover:text-natural-accent hover:scale-105 ${headerActive ? "text-natural-ink" : "text-white/90"}`}
+              className={`text-sm font-semibold whitespace-nowrap transition-all duration-300 hover:text-natural-accent hover:scale-105 ${headerActive ? "text-natural-ink" : "text-white/90"}`}
             >
               {item.label}
             </a>
           ))}
-          <div className="h-6 w-px bg-white/20"></div>
+          <div className="h-6 w-px bg-white/20 flex-shrink-0"></div>
           <a
             href={CLIENT_PORTAL_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className={`text-sm font-bold flex items-center gap-2 transition-all duration-300 ${headerActive ? "text-natural-primary" : "text-white"} hover:text-natural-accent hover:scale-105`}
+            className={`text-sm font-bold flex items-center gap-2 whitespace-nowrap transition-all duration-300 ${headerActive ? "text-natural-primary" : "text-white"} hover:text-natural-accent hover:scale-105`}
           >
             <Users size={16} /> Área do Cliente
           </a>
           <a
             href="#lead-form"
-            className="bg-natural-accent hover:brightness-95 text-natural-primary px-7 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-natural-accent/20 transition-all duration-300 hover:scale-105 active:scale-95"
+            className="bg-natural-accent hover:brightness-95 text-natural-primary px-6 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-lg shadow-natural-accent/20 transition-all duration-300 hover:scale-105 active:scale-95"
           >
             Diagnóstico Gratuito
           </a>
         </div>
 
         {/* Mobile Toggle */}
-        <button className="md:hidden p-2 rounded-lg transition-colors hover:bg-black/5" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <button className="lg:hidden p-2 rounded-lg transition-colors hover:bg-black/5" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? (
             <X className={headerActive ? "text-natural-primary" : "text-white"} size={28} />
           ) : (
@@ -286,14 +286,18 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
     e.preventDefault();
     setSubmitted(true);
 
+    const nomeStr = formData.nome ? `\n- Nome: ${formData.nome}` : "";
+    const emailStr = formData.email ? `\n- E-mail: ${formData.email}` : "";
+    const whatsappStr = formData.whatsapp ? `\n- WhatsApp: ${formData.whatsapp}` : "";
     const tipoStr = formData.tipo ? `\n- Tipo: ${formData.tipo}` : "";
     const nichoStr = formData.tipo === "Jurídica" && formData.nicho ? `\n- Nicho: ${formData.nicho}` : "";
     const servicoStr = formData.servico ? `\n- Serviço de interesse: ${formData.servico}` : "";
+    const planoStr = formData.plano ? `\n- Plano de interesse: ${formData.plano}` : "";
     const assunto = formData.servico ? `quero falar sobre ${formData.servico}` : "quero agendar o Diagnóstico Tributário AJR";
+    const dados = `${nomeStr}${emailStr}${whatsappStr}${tipoStr}${nichoStr}${servicoStr}${planoStr}`;
+    const dadosBlock = dados ? `\n\n*Meus dados:*${dados}` : "";
 
-    const message = encodeURIComponent(
-      `Olá AJR Contabilidade!\n\nVi o site e ${assunto}.\n\n*Meus dados:*\n- Nome: ${formData.nome}\n- E-mail: ${formData.email}\n- WhatsApp: ${formData.whatsapp}${tipoStr}${nichoStr}${servicoStr}\n- Plano de interesse: ${formData.plano || "Não selecionado"}`
-    );
+    const message = encodeURIComponent(`Olá AJR Contabilidade!\n\nVi o site e ${assunto}.${dadosBlock}`);
     window.open(`${WHATSAPP_URL}?text=${message}`, "_blank");
   };
 
@@ -391,8 +395,8 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
             Sua empresa pronta para a <span className="text-natural-accent">travessia de 2027</span>.
           </h1>
           <p className="text-white/80 text-base md:text-xl lg:text-2xl mb-10 max-w-xl leading-relaxed font-medium">
-            A reforma tributária vai mudar como o seu imposto é calculado. A AJR antecipa esse impacto no seu caixa — com dois
-            sócios que atendem você pelo nome, não pelo número de protocolo.
+            A reforma tributária vai mudar como o seu imposto é calculado, e a AJR está acompanhando de perto o que isso
+            representa para o seu caixa. Quem atende é o Ademario ou o Neemias, sócios do escritório.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 mb-12 lg:mb-16">
@@ -441,6 +445,7 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
                   <h3 className="text-2xl md:text-3xl font-bold font-serif text-natural-primary mb-2 md:mb-3">Diagnóstico Tributário AJR</h3>
                   <p className="text-natural-muted text-xs md:text-sm font-medium">
                     40 minutos, sem custo, com o Ademario ou o Neemias. Você sai com uma leitura da sua exposição em 2027.
+                    Preencha o que quiser e chame no WhatsApp: nenhum campo é obrigatório.
                   </p>
                 </div>
                 <form onSubmit={handleSubmit} id="lead-form" className="space-y-6">
@@ -465,7 +470,6 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
                     <label className="block text-[10px] font-black text-natural-primary uppercase tracking-[0.2em] mb-2 ml-1">Nome completo</label>
                     <input
                       type="text"
-                      required
                       value={formData.nome}
                       onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                       placeholder="Ex: João da Silva"
@@ -476,7 +480,6 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
                     <label className="block text-[10px] font-black text-natural-primary uppercase tracking-[0.2em] mb-2 ml-1">E-mail corporativo</label>
                     <input
                       type="email"
-                      required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="joao@suaempresa.com.br"
@@ -487,7 +490,6 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
                     <label className="block text-[10px] font-black text-natural-primary uppercase tracking-[0.2em] mb-2 ml-1">WhatsApp</label>
                     <input
                       type="tel"
-                      required
                       value={formData.whatsapp}
                       onChange={(e) => {
                         let val = e.target.value.replace(/\D/g, "").slice(0, 11);
@@ -510,7 +512,6 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
                       <label className="block text-[10px] font-black text-natural-primary uppercase tracking-[0.2em] mb-2 ml-1">Pessoa Física ou Jurídica?</label>
                       <div className="relative">
                         <select
-                          required
                           value={formData.tipo}
                           onChange={(e) => setFormData({ ...formData, tipo: e.target.value, nicho: e.target.value === "Física" ? "" : formData.nicho })}
                           className="w-full px-6 py-4 bg-white border-2 border-transparent rounded-2xl text-natural-ink focus:outline-none focus:border-natural-accent transition-all duration-300 appearance-none cursor-pointer text-sm font-medium shadow-inner"
@@ -530,7 +531,6 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
                         <label className="block text-[10px] font-black text-natural-primary uppercase tracking-[0.2em] mb-2 ml-1">Qual o seu nicho?</label>
                         <div className="relative">
                           <select
-                            required
                             value={formData.nicho}
                             onChange={(e) => setFormData({ ...formData, nicho: e.target.value })}
                             className="w-full px-6 py-4 bg-white border-2 border-transparent rounded-2xl text-natural-ink focus:outline-none focus:border-natural-accent transition-all duration-300 appearance-none cursor-pointer text-sm font-medium shadow-inner"
@@ -587,7 +587,7 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
                     Agendar meu diagnóstico
                   </button>
                   <p className="text-[10px] text-natural-muted text-center pt-4 font-medium opacity-70">
-                    Confidencialidade total dos seus dados. Sem compromisso.
+                    Seus dados ficam só entre a gente, sem compromisso de fechar negócio.
                   </p>
                 </form>
               </>
@@ -619,7 +619,7 @@ const TRAVESSIA_STEPS = [
   {
     tag: "2026 · ano do teste",
     title: "A alíquota de teste já vale",
-    desc: "1% de CBS e IBS, compensável — não aumenta a carga. O impacto é operacional: nota fiscal com campos novos, cadastro, NCM e sistema.",
+    desc: "A alíquota de 1% (CBS e IBS) é compensada com PIS e Cofins, então ainda não pesa no bolso. O que muda agora é a parte operacional: nota fiscal com campos novos, cadastro, NCM e sistema.",
     quote: "“Minha nota foi rejeitada e ninguém me explicou por quê.”",
     color: "text-natural-cyan",
   },
@@ -650,8 +650,8 @@ const Travessia = () => {
             A maior mudança tributária em 60 anos acontece <span className="text-natural-accent">agora</span>.
           </h3>
           <p className="text-white/70 text-base md:text-lg leading-relaxed">
-            Ninguém quer descobrir uma mudança de imposto pela multa. A AJR já está nessa conversa — para que, quando
-            2027 virar dor de caixa, a sua empresa já esteja do outro lado.
+            Ninguém quer descobrir uma mudança de imposto pela multa. A AJR já vem conversando com os clientes sobre isso,
+            para que a virada de 2027 chegue sem surpresa no caixa da empresa.
           </p>
         </div>
 
@@ -723,9 +723,9 @@ const About = () => {
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="order-1 lg:order-2">
             <h2 className="text-xs font-bold text-natural-accent uppercase tracking-[0.3em] mb-4">Sobre nós</h2>
             <h3 className="text-3xl md:text-5xl font-bold font-serif text-natural-ink mb-6 md:mb-8 leading-tight">
-              Uma operação de 15 anos.{" "}
+              Uma operação de 15 anos,{" "}
               <span className="relative inline-block">
-                <span className="relative z-10">Dois sócios que atendem você.</span>
+                <span className="relative z-10">com os sócios na linha de frente.</span>
                 <motion.span
                   initial={{ width: 0 }}
                   whileInView={{ width: "100%" }}
@@ -739,11 +739,12 @@ const About = () => {
             <div className="space-y-6 text-natural-ink/80 leading-relaxed text-base md:text-lg">
               <p>
                 O <strong>Escritório AJR Contabilidade</strong> atua há mais de 15 anos em assessoria contábil, fiscal, legal e
-                trabalhista, folha, BPO financeiro e consultoria de gestão — um portfólio de escritório médio, sob o mesmo teto.
+                trabalhista, folha, BPO financeiro e consultoria de gestão. É a estrutura de um escritório de porte médio,
+                tudo sob o mesmo teto.
               </p>
               <p>
-                O que não muda: quem responde é sócio. <strong>Ademario</strong> e <strong>Neemias</strong> estão na frente do
-                atendimento, com nome, rosto e resposta em até 2 horas úteis. Aqui você não fala com um protocolo.
+                Quem responde o atendimento são os próprios sócios. <strong>Ademario</strong> e <strong>Neemias</strong>{" "}
+                acompanham os clientes diretamente, com resposta em até 2 horas úteis.
               </p>
             </div>
 
@@ -754,7 +755,7 @@ const About = () => {
               </div>
               <div className="flex flex-col gap-2 p-4 bg-white rounded-2xl border border-natural-surface">
                 <span className="text-natural-green font-bold text-base">Sempre em conformidade</span>
-                <p className="text-sm text-natural-ink/60">Prazo, enquadramento e obrigações acompanhados — e você é avisado antes.</p>
+                <p className="text-sm text-natural-ink/60">Acompanhamos prazo, enquadramento e obrigações, e avisamos antes de qualquer vencimento.</p>
               </div>
             </div>
           </motion.div>
@@ -767,15 +768,15 @@ const About = () => {
 const DORES = [
   {
     dor: "“Meu contador só me manda guia. Nunca me explica nada.”",
-    resposta: "Todo mês você recebe os números com leitura: o que eles significam para a sua margem, não só o valor a pagar.",
+    resposta: "Todo mês mandamos os números com uma leitura do que eles significam para a sua margem.",
   },
   {
     dor: "“Desconfio que estou no regime errado e pagando imposto a mais.”",
-    resposta: "Simulação Presumido x Real x Simples com a sua realidade. Se dá para pagar menos dentro da lei, mostramos e assinamos embaixo.",
+    resposta: "Fazemos a simulação Presumido x Real x Simples com os números reais da sua empresa. Se der para pagar menos dentro da lei, a gente mostra e assina embaixo.",
   },
   {
     dor: "“Ninguém me avisou da mudança. Descobri quando a multa chegou.”",
-    resposta: "Você é avisado antes. Acompanhamos prazo, enquadramento e obrigações — e a gente te procura, não o contrário.",
+    resposta: "A gente acompanha prazo, enquadramento e obrigação, e avisa antes do vencimento. Não é você quem precisa correr atrás.",
   },
   {
     dor: "“Preciso de alguém que responda hoje, não em três dias úteis.”",
@@ -783,7 +784,7 @@ const DORES = [
   },
   {
     dor: "“Não faço ideia do que 2027 vai fazer com a minha margem.”",
-    resposta: "É a conversa que a gente puxa desde agora — no Diagnóstico Tributário AJR, 40 minutos com o Ademario ou o Neemias.",
+    resposta: "A gente trata exatamente disso no Diagnóstico Tributário AJR: 40 minutos com o Ademario ou o Neemias para entender o que muda no seu caso.",
   },
 ];
 
@@ -793,7 +794,7 @@ const Dores = () => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-14 lg:mb-20">
           <h2 className="text-xs md:text-sm font-bold text-natural-accent uppercase tracking-[0.3em] mb-4">O que a gente resolve</h2>
-          <h3 className="text-3xl md:text-5xl font-bold font-serif mb-6">Se você já disse alguma dessas frases, a AJR é para você.</h3>
+          <h3 className="text-3xl md:text-5xl font-bold font-serif mb-6">Frases que ouvimos toda semana de quem chega até a AJR.</h3>
         </div>
 
         <div className="max-w-4xl mx-auto space-y-4">
@@ -822,7 +823,7 @@ const Dores = () => {
 const SERVICES = [
   {
     title: "Assessoria Contábil",
-    desc: "Escrituração, balancetes e demonstrações que viram informação para decidir — não papel para arquivar.",
+    desc: "Escrituração, balancetes e demonstrações organizados para você usar na hora de decidir.",
     icon: <Calculator className="text-natural-primary" />,
     resumo:
       "Cuidamos da contabilidade completa da sua empresa: registramos cada movimento, fechamos o mês e transformamos isso em relatórios que você entende e usa para decidir.",
@@ -833,14 +834,14 @@ const SERVICES = [
       "ECD e ECF entregues no prazo",
       "Apoio para acesso a crédito: o banco olha o seu balanço antes de emprestar",
     ],
-    paraQuem: "Toda empresa que precisa de contabilidade organizada e quer usar os números para gerir, não só para cumprir obrigação.",
+    paraQuem: "Toda empresa que quer usar os números para gerir o negócio, além de cumprir a obrigação legal.",
   },
   {
     title: "Assessoria Fiscal & Tributária",
     desc: "Apuração, obrigações e planejamento para você pagar o mínimo dentro da lei, com alguém que assina embaixo.",
     icon: <ShieldCheck className="text-natural-primary" />,
     resumo:
-      "Apuramos os seus impostos todo mês e revisamos se o regime tributário ainda é o melhor para a sua realidade — principalmente com a reforma de 2027 chegando.",
+      "Apuramos os seus impostos todo mês e revisamos periodicamente se o regime tributário ainda é o melhor para a sua realidade, ainda mais com a reforma de 2027 no caminho.",
     inclui: [
       "Apuração mensal de impostos e emissão de guias",
       "Entrega das obrigações acessórias (SPED, DCTF, EFD e afins)",
@@ -852,7 +853,7 @@ const SERVICES = [
   },
   {
     title: "Assessoria Trabalhista (RH)",
-    desc: "Folha, pró-labore, encargos e eSocial em dia — sem susto na virada do mês.",
+    desc: "Folha, pró-labore, encargos e eSocial em dia, sem correria na virada do mês.",
     icon: <Users className="text-natural-primary" />,
     resumo:
       "Assumimos toda a rotina de pessoal da sua empresa: cálculo da folha, encargos, férias, 13º, admissões, desligamentos e o envio ao eSocial.",
@@ -870,7 +871,7 @@ const SERVICES = [
     desc: "Abertura, alteração, encerramento e revisão de enquadramento com agilidade e leitura jurídica.",
     icon: <Briefcase className="text-natural-primary" />,
     resumo:
-      "Resolvemos a parte burocrática da vida da empresa na Junta Comercial, na Receita e na Prefeitura — da abertura ao encerramento, passando por qualquer alteração no meio do caminho.",
+      "Resolvemos a parte burocrática da empresa na Junta Comercial, na Receita e na Prefeitura: da abertura ao encerramento, e qualquer alteração no meio do caminho.",
     inclui: [
       "Abertura de empresa e definição de CNAE e natureza jurídica",
       "Alteração contratual: sócios, capital, endereço, atividade",
@@ -882,7 +883,7 @@ const SERVICES = [
   },
   {
     title: "BPO Financeiro",
-    desc: "Contas a pagar e receber, fluxo de caixa e conciliação sob nossa gestão. Você olha o painel, não a papelada.",
+    desc: "Contas a pagar e a receber, fluxo de caixa e conciliação sob nossa gestão, com um painel simples para acompanhar.",
     icon: <TrendingUp className="text-natural-primary" />,
     resumo:
       "Terceirização da rotina financeira: nós operamos contas a pagar, contas a receber, conciliação bancária e fluxo de caixa. Você acompanha por um painel e decide com número na mão.",
@@ -1052,17 +1053,17 @@ const Plans = () => {
           <h3 className="text-3xl md:text-5xl font-black font-serif text-natural-ink mb-6">
             Planos sob medida para <br className="hidden md:block" /> a sua fase
           </h3>
-          <p className="text-natural-ink/60 text-sm md:text-base">Escolha a estrutura ideal para o momento da empresa e escale com segurança.</p>
+          <p className="text-natural-ink/60 text-sm md:text-base">Escolha o plano que combina com o momento da sua empresa.</p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {PLANS.map((plan, idx) => (
             <motion.div
               key={plan.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ duration: 0.4, delay: idx * 0.05 }}
               className={`flex flex-col rounded-[2rem] md:rounded-[2.5rem] p-7 md:p-8 transition-all hover:scale-[1.02] shadow-xl ${
                 plan.highlight
                   ? "bg-natural-primary text-white border-2 border-natural-accent shadow-natural-primary/20"
@@ -1085,7 +1086,7 @@ const Plans = () => {
 
               <button
                 onClick={() => scrollToForm(plan.name)}
-                className={`w-full py-4 rounded-2xl font-bold uppercase tracking-widest text-xs transition-all ${
+                className={`w-full py-4 rounded-2xl font-bold uppercase tracking-wide text-xs whitespace-nowrap transition-all ${
                   plan.highlight ? "bg-white text-natural-primary hover:bg-natural-accent" : "bg-natural-primary text-white hover:bg-natural-accent hover:text-natural-primary"
                 }`}
               >
@@ -1102,7 +1103,7 @@ const Plans = () => {
 const DIFERENCIAIS = [
   {
     title: "Você fala com o sócio",
-    desc: "Ademario e Neemias atendem, aparecem e respondem. Nenhuma plataforma consegue prometer isso.",
+    desc: "O Ademario e o Neemias atendem direto, sem intermediário.",
   },
   {
     title: "Tecnologia que devolve tempo",
@@ -1114,7 +1115,7 @@ const DIFERENCIAIS = [
   },
   {
     title: "15 anos de estrada",
-    desc: "Num setor em que 41% dos escritórios abriram nos últimos quatro anos, tempo de casa é raro — e verificável.",
+    desc: "Num setor em que 41% dos escritórios abriram nos últimos quatro anos, 15 anos de casa é raro de encontrar.",
   },
 ];
 
@@ -1125,7 +1126,7 @@ const Benefits = ({ setShowHistoryModal }: { setShowHistoryModal: (v: boolean) =
         <div className="order-1">
           <h2 className="text-xs md:text-sm font-bold text-natural-accent uppercase tracking-[0.3em] mb-4">Por que a AJR?</h2>
           <h3 className="text-3xl md:text-5xl font-bold font-serif text-natural-ink mb-8 leading-tight">
-            Muito mais que números: entregamos parceria e resultado.
+            Como é trabalhar com a AJR no dia a dia.
           </h3>
 
           <div className="space-y-6">
@@ -1186,7 +1187,7 @@ const Benefits = ({ setShowHistoryModal }: { setShowHistoryModal: (v: boolean) =
                 <img
                   src="https://pbs.twimg.com/media/HGIlV-KWwAAt_Sa?format=png&name=360x360"
                   alt="Logo AJR Contabilidade"
-                  className="w-28 h-28 md:w-32 md:h-32 object-contain relative z-10"
+                  className="w-28 h-28 md:w-32 md:h-32 object-contain relative z-10 brightness-0"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -1235,8 +1236,8 @@ const FinalCTA = () => {
                 </div>
 
                 <p className="text-natural-muted text-sm md:text-base leading-relaxed md:pl-[4.5rem]">
-                  Atendimento presencial na Cidade Dutra, Capela do Socorro e toda a zona sul de São Paulo — e digital para
-                  o restante do Sudeste.
+                  Atendimento presencial na Cidade Dutra, Capela do Socorro e no resto da zona sul de São Paulo. Fora dessa
+                  região, atendemos digitalmente todo o Sudeste.
                 </p>
               </div>
 
@@ -1280,7 +1281,7 @@ const FinalCTA = () => {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Localização AJR Contabilidade — Cidade Dutra, São Paulo"
+                  title="Localização AJR Contabilidade, Cidade Dutra, São Paulo"
                   className="filter contrast-[1.05]"
                 ></iframe>
               </div>
@@ -1365,16 +1366,16 @@ const Footer = () => {
             <h4 className="font-bold font-serif text-white mb-6">Siga a AJR</h4>
             <div className="flex flex-col gap-4">
               <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-white transition-all">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                <div className="w-10 h-10 flex-shrink-0 rounded-full bg-white/10 flex items-center justify-center">
                   <Instagram size={20} className="text-natural-accent" />
                 </div>
-                <span className="text-sm font-medium">@contabilidadeajroficial</span>
+                <span className="text-sm font-medium break-all">@contabilidadeajroficial</span>
               </a>
               <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-white transition-all">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                <div className="w-10 h-10 flex-shrink-0 rounded-full bg-white/10 flex items-center justify-center">
                   <Facebook size={20} className="text-natural-accent" />
                 </div>
-                <span className="text-sm font-medium">/contabilidadeajroficial</span>
+                <span className="text-sm font-medium break-all">/contabilidadeajroficial</span>
               </a>
             </div>
           </div>
@@ -1398,6 +1399,26 @@ const Footer = () => {
     </footer>
   );
 };
+
+const WhatsAppIcon = ({ size = 24, className = "" }: { size?: number; className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 32 32" fill="currentColor" className={className} aria-hidden="true">
+    <path d="M16.004 2.667C8.64 2.667 2.667 8.64 2.667 16c0 2.516.7 4.87 1.914 6.878L2.667 29.333l6.62-1.877A13.28 13.28 0 0 0 16.004 29.333c7.363 0 13.333-5.97 13.333-13.333S23.367 2.667 16.004 2.667Zm0 24.222a10.83 10.83 0 0 1-5.53-1.515l-.397-.236-3.928 1.114 1.13-3.83-.258-.393A10.84 10.84 0 0 1 5.223 16c0-5.945 4.836-10.778 10.78-10.778 5.945 0 10.778 4.833 10.778 10.778 0 5.944-4.833 10.889-10.777 10.889Z" />
+    <path d="M22.02 18.86c-.33-.166-1.955-.965-2.258-1.076-.303-.11-.523-.165-.744.166-.22.33-.853 1.075-1.046 1.296-.192.22-.385.248-.715.083-.33-.166-1.395-.514-2.657-1.64-.982-.876-1.645-1.958-1.838-2.289-.192-.33-.02-.508.145-.673.149-.148.33-.386.496-.579.165-.192.22-.33.33-.55.11-.221.055-.414-.028-.58-.083-.165-.744-1.792-1.02-2.455-.269-.643-.542-.556-.744-.567-.192-.008-.413-.01-.634-.01-.22 0-.578.083-.881.414-.303.33-1.156 1.13-1.156 2.756 0 1.626 1.184 3.198 1.349 3.419.165.22 2.33 3.56 5.646 4.99.789.34 1.404.543 1.884.696.792.252 1.512.216 2.081.132.635-.095 1.955-.8 2.23-1.572.276-.771.276-1.433.193-1.572-.083-.138-.303-.22-.634-.386Z" />
+  </svg>
+);
+
+const WhatsAppFloatButton = () => (
+  <a
+    href={WHATSAPP_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Falar no WhatsApp"
+    className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-40 w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#25D366] text-white shadow-2xl shadow-black/30 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform animate-pulse-whatsapp"
+  >
+    <WhatsAppIcon size={30} className="md:hidden" />
+    <WhatsAppIcon size={34} className="hidden md:block" />
+  </a>
+);
 
 const StoryModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   return (
@@ -1443,24 +1464,21 @@ const StoryModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 
               <div className="space-y-5 md:space-y-6 text-natural-ink/80 text-base md:text-lg leading-relaxed font-medium">
                 <p>
-                  O Escritório <strong className="text-natural-primary">AJR Contabilidade</strong> tem mais de 15 anos de
-                  expertise em assessoria contábil, legal, fiscal, trabalhista e consultoria de gestão empresarial.
+                  O Escritório <strong className="text-natural-primary">AJR Contabilidade</strong> existe há mais de 15
+                  anos, sempre em assessoria contábil, fiscal, trabalhista e de gestão empresarial.
                 </p>
                 <p>
-                  Ao longo desse tempo, desenvolvemos metodologias próprias para identificar necessidades complexas e
-                  transmitir conhecimento técnico de forma clara. Atuamos com{" "}
-                  <strong className="text-natural-primary">transparência, ética e compromisso</strong> com o resultado dos
-                  nossos clientes.
+                  Ao longo desse tempo, fomos ajustando a forma de atender: menos jargão técnico, mais conversa direta
+                  sobre o que cada número significa no dia a dia do cliente.
                 </p>
                 <p>
-                  Nosso diferencial é unir a experiência humana às{" "}
-                  <strong className="text-natural-primary">ferramentas mais modernas</strong> do mercado, em um ambiente
-                  digital seguro e confidencial — com dois sócios sempre acessíveis.
+                  Hoje usamos os sistemas de gestão mais atuais do mercado, mas quem atende continua sendo o{" "}
+                  <strong className="text-natural-primary">Ademario</strong> e o{" "}
+                  <strong className="text-natural-primary">Neemias</strong>, direto, num ambiente digital seguro.
                 </p>
                 <p>
-                  A missão é a excelência contínua: não apenas atender, mas{" "}
-                  <strong className="text-natural-primary">antecipar o que vem</strong> e proteger a competitividade de cada
-                  empresa que confia na AJR.
+                  A ideia é sempre avisar antes, não depois. É por isso que a AJR está acompanhando de perto a reforma
+                  tributária: a meta é que os clientes cheguem em 2027 sabendo o que esperar.
                 </p>
               </div>
 
@@ -1519,6 +1537,7 @@ export default function App() {
       <Footer />
       <StoryModal isOpen={showHistoryModal} onClose={() => setShowHistoryModal(false)} />
       <ServiceModal index={serviceIndex} onClose={() => setServiceIndex(null)} />
+      <WhatsAppFloatButton />
     </div>
   );
 }
