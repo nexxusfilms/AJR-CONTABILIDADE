@@ -41,6 +41,49 @@ const FACEBOOK_URL = "https://www.facebook.com/contabilidadeajroficial";
 
 const SOCIOS = ["Ademario", "Neemias"];
 
+// --- Captura de leads (Google Sheets via Apps Script) ---
+// URL do app da web do Apps Script que grava na planilha de leads. Se ficar vazia, nada é enviado.
+const LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbz9vsPXWYGdVCBJ6cXYDPcoh1FgMDEeO0reRAYsqTYPt6cwnnBl6tpjNPAVKWvgmGJkhQ/exec";
+const LEADS_TOKEN = "CAzdY8vyExOXepo2__L2XHBi";
+const SITE_ORIGEM = "Site principal AJR";
+const ATTR_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "fbclid"];
+
+const captureAttribution = () => {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const saved = JSON.parse(sessionStorage.getItem("ajr_attr") || "{}");
+    let changed = false;
+    ATTR_KEYS.forEach((k) => {
+      const v = params.get(k);
+      if (v) {
+        saved[k] = v;
+        changed = true;
+      }
+    });
+    if (changed) sessionStorage.setItem("ajr_attr", JSON.stringify(saved));
+  } catch {}
+};
+captureAttribution();
+
+const sendLead = (data: Record<string, string>) => {
+  if (!LEADS_ENDPOINT) return;
+  if (!data.nome && !data.email && !data.whatsapp) return;
+  let attr: Record<string, string> = {};
+  try {
+    attr = JSON.parse(sessionStorage.getItem("ajr_attr") || "{}");
+  } catch {}
+  const payload = { token: LEADS_TOKEN, origem: SITE_ORIGEM, pagina: window.location.href, ...data, ...attr };
+  try {
+    fetch(LEADS_ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    });
+  } catch {}
+};
+
 const PLANS = [
   {
     id: "bronze",
@@ -298,6 +341,15 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
     const dadosBlock = dados ? `\n\n*Meus dados:*${dados}` : "";
 
     const message = encodeURIComponent(`Olá AJR Contabilidade!\n\nVi o site e ${assunto}.${dadosBlock}`);
+    sendLead({
+      nome: formData.nome,
+      email: formData.email,
+      whatsapp: formData.whatsapp,
+      tipo: formData.tipo,
+      nicho: formData.nicho,
+      servico: formData.servico,
+      plano: formData.plano,
+    });
     window.open(`${WHATSAPP_URL}?text=${message}`, "_blank");
   };
 
