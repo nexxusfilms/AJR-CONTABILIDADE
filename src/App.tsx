@@ -28,7 +28,7 @@ import { motion, AnimatePresence } from "motion/react";
 
 // --- Constants ---
 
-const BRAND_PHONE = "11940141936";
+const BRAND_PHONE = "1126676883";
 const BRAND_EMAIL = "contato@contabilidadeajr.com.br";
 const BRAND_ADDRESS = "R. Mangaratiba, 134 - Sala 3 - Cidade Dutra, São Paulo - SP, 04811-010";
 const BRAND_HOURS = "Segunda à Sexta – das 09:00 às 18:00";
