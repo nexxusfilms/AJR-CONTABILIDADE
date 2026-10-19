@@ -494,7 +494,7 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
             {!submitted ? (
               <>
                 <div className="mb-6 md:mb-10">
-                  <h3 className="text-2xl md:text-3xl font-bold font-serif text-natural-primary mb-2 md:mb-3">Diagnóstico Tributário AJR</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold font-serif text-natural-primary mb-2 md:mb-3">Fale com nosso time</h3>
                   <p className="text-natural-muted text-xs md:text-sm font-medium">
                     40 minutos, sem custo, com o Ademario ou o Neemias. Você sai com uma leitura da sua exposição em 2027.
                     Preencha o que quiser e chame no WhatsApp: nenhum campo é obrigatório.
@@ -604,39 +604,11 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
                       </motion.div>
                     )}
                   </div>
-                  <div>
-                    <label className="block text-[10px] font-black text-natural-primary uppercase tracking-[0.2em] mb-2 ml-1">Plano de interesse</label>
-                    <div className="relative">
-                      <select
-                        value={formData.plano}
-                        onChange={(e) => setFormData({ ...formData, plano: e.target.value })}
-                        className="w-full px-6 py-4 bg-white border-2 border-transparent rounded-2xl text-natural-ink focus:outline-none focus:border-natural-accent transition-all duration-300 appearance-none cursor-pointer text-sm font-medium shadow-inner"
-                      >
-                        <option value="">Selecione um plano (opcional)</option>
-                        {PLANS.map((p) => (
-                          <option key={p.id} value={p.name}>
-                            {p.name}
-                          </option>
-                        ))}
-                        <option value="Personalizado">Outro / Personalizado</option>
-                      </select>
-                      <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-natural-accent">
-                        <ChevronDown size={18} />
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setShowPlansModal(true)}
-                      className="mt-4 ml-1 text-[13px] md:text-[15px] font-black text-natural-primary hover:text-natural-accent transition-colors flex items-center gap-1 uppercase tracking-[0.05em]"
-                    >
-                      Dúvida no plano? <span className="underline">clique aqui</span>
-                    </button>
-                  </div>
                   <button
                     type="submit"
-                    className="w-full py-5 bg-natural-accent hover:brightness-95 text-natural-primary rounded-2xl font-black uppercase tracking-[0.2em] text-xs shadow-xl shadow-natural-accent/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] mt-6"
+                    className="w-full py-5 flex items-center justify-center gap-3 bg-natural-accent hover:brightness-95 text-natural-primary rounded-2xl font-black uppercase tracking-[0.2em] text-xs shadow-xl shadow-natural-accent/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] mt-6"
                   >
-                    Agendar meu diagnóstico
+                    Fale conosco <WhatsAppIcon size={20} />
                   </button>
                   <p className="text-[10px] text-natural-muted text-center pt-4 font-medium opacity-70">
                     Seus dados ficam só entre a gente, sem compromisso de fechar negócio.
