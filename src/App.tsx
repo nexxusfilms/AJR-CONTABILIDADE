@@ -29,6 +29,7 @@ import { motion, AnimatePresence } from "motion/react";
 // --- Constants ---
 
 const BRAND_PHONE = "1126676883";
+const BRAND_PHONE_DISPLAY = "(11) 2667-6883";
 const BRAND_EMAIL = "contato@contabilidadeajr.com.br";
 const BRAND_ADDRESS = "R. Mangaratiba, 134 - Sala 3 - Cidade Dutra, São Paulo - SP, 04811-010";
 const BRAND_HOURS = "Segunda à Sexta – das 09:00 às 18:00";
@@ -1387,8 +1388,17 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-bold font-serif text-white mb-6">Siga a AJR</h4>
+            <h4 className="font-bold font-serif text-white mb-6">Fale com a AJR</h4>
             <div className="flex flex-col gap-4">
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-white transition-all">
+                <div className="w-10 h-10 flex-shrink-0 rounded-full bg-white/10 flex items-center justify-center">
+                  <WhatsAppIcon size={20} className="text-natural-accent" />
+                </div>
+                <span className="text-sm font-medium">
+                  <span className="block">{BRAND_PHONE_DISPLAY}</span>
+                  <span className="block text-xs text-white/50">Telefone / WhatsApp</span>
+                </span>
+              </a>
               <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-white transition-all">
                 <div className="w-10 h-10 flex-shrink-0 rounded-full bg-white/10 flex items-center justify-center">
                   <Instagram size={20} className="text-natural-accent" />
