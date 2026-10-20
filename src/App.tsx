@@ -25,6 +25,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import sociosImg from "./assets/socios-ajr.jpg";
 
 // --- Constants ---
 
@@ -727,9 +728,9 @@ const About = () => {
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative order-2 lg:order-1">
             <div className="absolute -top-10 -left-10 w-40 h-40 bg-natural-accent/10 rounded-full blur-3xl opacity-50"></div>
             <img
-              src="https://pbs.twimg.com/media/HGI7UmnbUAAi7fv?format=jpg&name=4096x4096"
-              alt="Escritório AJR Contabilidade na Cidade Dutra, São Paulo"
-              className="rounded-[2rem] md:rounded-[3rem] shadow-2xl relative z-10 w-full object-cover aspect-[4/5] md:aspect-auto"
+              src={sociosImg}
+              alt="Ademario e Neemias, sócios da AJR Contabilidade"
+              className="rounded-[2rem] md:rounded-[3rem] shadow-2xl relative z-10 w-full object-cover aspect-[3/2]"
               referrerPolicy="no-referrer"
             />
             <div className="absolute -bottom-6 -right-6 bg-natural-bg p-5 md:p-6 rounded-2xl md:rounded-3xl shadow-xl border border-natural-surface z-20 hidden sm:block">
