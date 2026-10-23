@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import sociosImg from "./assets/socios-ajr.jpg";
+import escritorioImg from "./assets/escritorio-ajr.jpg";
 
 // --- Constants ---
 
@@ -365,12 +366,12 @@ const Hero = ({ showPlansModal, setShowPlansModal }: { showPlansModal: boolean; 
       {/* Background with overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <img
-          src="https://pbs.twimg.com/media/HGJIzXZWQAAKRf2?format=jpg&name=4096x4096"
+          src={escritorioImg}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover blur-sm opacity-40 lg:opacity-30 object-right md:object-center scale-105"
+          className="absolute inset-0 w-full h-full object-cover object-[60%_center]"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-natural-primary/80 via-natural-primary/60 to-natural-primary lg:bg-gradient-to-r lg:from-natural-primary lg:via-natural-primary/40 lg:to-natural-primary/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-natural-primary/90 via-natural-primary/80 to-natural-primary/95 lg:bg-gradient-to-r lg:from-natural-primary lg:via-natural-primary/80 lg:to-natural-primary/50"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid lg:grid-cols-[1.2fr_420px] xl:grid-cols-[1.1fr_480px] gap-12 lg:gap-24 items-center">
